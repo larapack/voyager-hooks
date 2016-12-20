@@ -31,5 +31,5 @@
             "Larapack\\VoyagerHooks\\Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }
