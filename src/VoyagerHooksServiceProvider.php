@@ -78,7 +78,7 @@ class VoyagerHooksServiceProvider extends ServiceProvider
         }
     }
 
-    protected function ensurePermissionExists() {
+    protected function ensurePermissionExist() {
         $permission = Permission::firstOrNew([
             'key' => 'browse_hooks',
             'table_name' => 'admin',
