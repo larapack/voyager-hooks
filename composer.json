@@ -1,0 +1,34 @@
+{
+    "name": "larapack/voyager-hooks",
+    "description": "Hooks integrated in Voyager",
+    "keywords": ["laravel", "hooks", "voyager"],
+    "license": "MIT",
+    "homepage": "https://larapack.io/",
+    "support": {
+        "issues": "https://github.com/larapack/voyager-hooks/issues",
+        "source": "https://github.com/larapack/voyager-hooks"
+    },
+    "authors": [
+        {
+            "name": "Mark Topper",
+            "email": "mark@ulties.com"
+        }
+    ],
+    "require": {
+        "tcg/voyager": "^0.10.5"
+    },
+    "require-dev": {
+        "orchestra/testbench": "~3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Larapack\\VoyagerHooks\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Larapack\\VoyagerHooks\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable"
+}
