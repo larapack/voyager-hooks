@@ -15,7 +15,8 @@
         }
     ],
     "require": {
-        "tcg/voyager": "^0.10.5"
+        "tcg/voyager": "^0.10.5",
+        "larapack/hooks": "dev-master",
     },
     "require-dev": {
         "orchestra/testbench": "~3.0"
