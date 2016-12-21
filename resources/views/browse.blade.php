@@ -34,7 +34,7 @@
                                         <i class="voyager-{{ $hook->type }}"></i> {{ $hook->name }}
                                     </td>
                                     <td>
-                                        {{ $hook->enabled ? 'This hook is installed!' : 'No, sorry champ!' }}
+                                        <?= ($hook->enabled ? '<i class="voyager-check"></i> ENABLED' : '<i class="voyager-x"></i> DISABLED') ?>
                                     </td>
                                     <td class="no-sort no-click">
                                         <div class="btn-sm btn-danger pull-right delete" data-id="{{ $hook->name }}" id="delete-{{ $hook->name }}">
