@@ -2,9 +2,9 @@
 
 namespace Larapack\VoyagerHooks\Controllers;
 
-use Larapack\Hooks\Hooks;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Larapack\Hooks\Hooks;
 
 class HooksController extends Controller
 {
