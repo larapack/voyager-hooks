@@ -2,13 +2,13 @@
 
 namespace Larapack\VoyagerHooks;
 
-use TCG\Voyager\Models\Role;
-use TCG\Voyager\Models\Menu;
-use TCG\Voyager\Models\MenuItem;
 use Illuminate\Events\Dispatcher;
-use TCG\Voyager\Models\Permission;
 use Illuminate\Support\ServiceProvider;
 use Larapack\Hooks\HooksServiceProvider;
+use TCG\Voyager\Models\Menu;
+use TCG\Voyager\Models\MenuItem;
+use TCG\Voyager\Models\Permission;
+use TCG\Voyager\Models\Role;
 
 class VoyagerHooksServiceProvider extends ServiceProvider
 {
@@ -21,7 +21,7 @@ class VoyagerHooksServiceProvider extends ServiceProvider
         $this->app->register(HooksServiceProvider::class);
 
         // Load views
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'voyager-hooks');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'voyager-hooks');
     }
 
     /**
@@ -44,7 +44,8 @@ class VoyagerHooksServiceProvider extends ServiceProvider
         }
     }
 
-    public function addHookRoute($router) {
+    public function addHookRoute($router)
+    {
         $namespacePrefix = '\\Larapack\\VoyagerHooks\\Controllers\\';
 
         $router->get('hooks', ['uses' => $namespacePrefix.'HooksController@index', 'as' => 'hooks']);
@@ -63,14 +64,14 @@ class VoyagerHooksServiceProvider extends ServiceProvider
 
             if (is_null($menuItem)) {
                 $menu->items->add(MenuItem::create([
-                    'menu_id' => $menu->id,
-                    'url' => $url,
-                    'title' => 'Hooks',
-                    'target' => '_self',
+                    'menu_id'    => $menu->id,
+                    'url'        => $url,
+                    'title'      => 'Hooks',
+                    'target'     => '_self',
                     'icon_class' => 'voyager-hook',
-                    'color' => null,
-                    'parent_id' => null,
-                    'order' => 99,
+                    'color'      => null,
+                    'parent_id'  => null,
+                    'order'      => 99,
                 ]));
 
                 $this->ensurePermissionExist();
@@ -78,9 +79,10 @@ class VoyagerHooksServiceProvider extends ServiceProvider
         }
     }
 
-    protected function ensurePermissionExist() {
+    protected function ensurePermissionExist()
+    {
         $permission = Permission::firstOrNew([
-            'key' => 'browse_hooks',
+            'key'        => 'browse_hooks',
             'table_name' => 'admin',
         ]);
 
