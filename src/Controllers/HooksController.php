@@ -2,6 +2,7 @@
 
 namespace Larapack\VoyagerHooks\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Larapack\Hooks\Hooks;
@@ -17,8 +18,17 @@ class HooksController extends Controller
 
     public function index()
     {
+        $lastUpdated = $this->hooks->getLastRemoteCheck();
+
+        if (is_null($lastUpdated)) {
+            $lastUpdated = Carbon::now();
+            $this->hooks->setLastRemoteCheck($lastUpdated);
+            $this->hooks->remakeJson();
+        }
+
         return view('voyager-hooks::browse', [
             'hooks' => $this->hooks->hooks(),
+            'daysSinceLastCheck' => $lastUpdated->diffInDays(Carbon::now()),
         ]);
     }
 
@@ -32,6 +42,13 @@ class HooksController extends Controller
     public function uninstall($name)
     {
         $this->hooks->uninstall($name);
+
+        return redirect(route('voyager.hooks'));
+    }
+
+    public function update($name)
+    {
+        $this->hooks->update($name);
 
         return redirect(route('voyager.hooks'));
     }

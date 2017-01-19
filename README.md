@@ -25,8 +25,20 @@ composer require larapack/voyager-hooks
 ```
 
 Then add the service provider to the configuration:
+
 ```php
 'providers' => [
     Larapack\VoyagerHooks\VoyagerHooksServierProvider::class,
 ],
 ```
+
+In order for Voyager to automatically check for updates of hooks, add the following to your console kernel:
+
+```php
+protected function schedule(Schedule $schedule)
+{
+    $schedule->command('hook:check')->sundays()->at('03:00');
+}
+```
+
+That's it! You can now visit your Voyager admin panel and see a new menu item called `Hooks` have been added.
