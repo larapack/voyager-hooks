@@ -30,6 +30,5 @@
         "psr-4": {
             "Larapack\\VoyagerHooks\\Tests\\": "tests/"
         }
-    },
-    "minimum-stability": "stable"
+    }
 }
