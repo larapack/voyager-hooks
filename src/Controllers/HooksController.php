@@ -27,7 +27,7 @@ class HooksController extends Controller
         }
 
         return view('voyager-hooks::browse', [
-            'hooks' => $this->hooks->hooks(),
+            'hooks'              => $this->hooks->hooks(),
             'daysSinceLastCheck' => $lastUpdated->diffInDays(Carbon::now()),
         ]);
     }
