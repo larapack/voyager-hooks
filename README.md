@@ -28,7 +28,7 @@ Then add the service provider to the configuration:
 
 ```php
 'providers' => [
-    Larapack\VoyagerHooks\VoyagerHooksServierProvider::class,
+    Larapack\VoyagerHooks\VoyagerHooksServiceProvider::class,
 ],
 ```
 
