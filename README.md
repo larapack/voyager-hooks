@@ -1,5 +1,3 @@
-# voyager-hooks
-
 ![Voyager Hooks](https://raw.githubusercontent.com/larapack/voyager-hooks/master/logo.png)
 
 <p align="center">
