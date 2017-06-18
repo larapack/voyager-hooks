@@ -3,7 +3,6 @@
 namespace Larapack\VoyagerHooks\Controllers;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Larapack\Hooks\Hooks;
 
