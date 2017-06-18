@@ -54,6 +54,7 @@ class VoyagerHooksServiceProvider extends ServiceProvider
         $router->get('hooks/{name}/update', ['uses' => $namespacePrefix.'HooksController@update', 'as' => 'hooks.update']);
         $router->post('hooks', ['uses' => $namespacePrefix.'HooksController@install', 'as' => 'hooks.install']);
         $router->delete('hooks/{name}', ['uses' => $namespacePrefix.'HooksController@uninstall', 'as' => 'hooks.uninstall']);
+        $router->get('hooks/cache/refresh', ['uses' => $namespacePrefix.'HooksController@cacheRefresh', 'as' => 'hooks.cache.refresh']);
     }
 
     public function addHookMenuItem(Menu $menu)

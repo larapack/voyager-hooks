@@ -66,4 +66,14 @@ class HooksController extends Controller
 
         return redirect(route('voyager.hooks'));
     }
+
+    public function cacheRefresh()
+    {
+        $this->hooks->refreshCache();
+
+        return redirect(route('voyager.hooks'))->with([
+            'message'    => 'Hooks Cache Updated',
+            'alert-type' => 'success',
+        ]);
+    }
 }

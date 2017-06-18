@@ -3,9 +3,9 @@
 @section('page_header')
     <h1 class="page-title">
         <i class="voyager-hook"></i> Hooks
-        <div class="btn btn-success install">
-            <i class="voyager-plus"></i> Add hook
-        </div>
+        <a class="btn btn-success refresh" href="{{ route('voyager.hooks.cache.refresh') }}">
+            <i class="voyager-refresh"></i> Update cache
+        </a>
     </h1>
 @stop
 
@@ -46,14 +46,25 @@
                                         <?= ($hook->enabled ? '<i class="voyager-check"></i> ENABLED' : '<i class="voyager-x"></i> DISABLED') ?>
                                     </td>
                                     <td class="no-sort no-click">
-                                        <div class="btn-sm btn-danger pull-right delete" data-id="{{ $hook->name }}" id="delete-{{ $hook->name }}">
-                                            <i class="voyager-trash"></i> Uninstall
-                                        </div>
-                                        <a href="{{ route('voyager.hooks.'.($hook->enabled ? 'disable' : 'enable'), $hook->name) }}" class="btn-sm btn-primary pull-right edit">
-                                            <i class="voyager-edit"></i> {{ $hook->enabled ? 'Disable' : 'Enable' }}
-                                        </a>
+                                        @if ($hook->installed)
+                                            <a href="javascript:;" class="btn-sm btn-danger pull-right uninstall"
+                                                data-id="{{ $hook->name }}" id="uninstall-{{ $hook->name }}">
+                                                <i class="voyager-trash"></i> Uninstall
+                                            </a>
+                                            <a href="{{ route('voyager.hooks.'.($hook->enabled ? 'disable' : 'enable'), $hook->name) }}"
+                                                class="btn-sm btn-{{ $hook->enabled ? 'danger' : 'primary' }} pull-right edit">
+                                                <i class="voyager-edit"></i> {{ $hook->enabled ? 'Disable' : 'Enable' }}
+                                            </a>
+                                        @else
+                                            <a href="javascript:;" class="btn-sm btn-primary pull-right install"
+                                                data-id="{{ $hook->name }}" id="install-{{ $hook->name }}">
+                                                <i class="voyager-plus"></i> Install
+                                            </a>
+                                        @endif
+
                                         @if ($hook->hasUpdateAvailable())
-                                            <a href="{{ route('voyager.hooks.update', $hook->name) }}" class="btn-sm btn-warning pull-right update">
+                                            <a href="{{ route('voyager.hooks.update', $hook->name) }}"
+                                                class="btn-sm btn-warning pull-right update">
                                                 <i class="voyager-edit"></i> Update
                                             </a>
                                         @endif
@@ -68,21 +79,23 @@
         </div>
     </div>
 
-    <div class="modal modal-danger fade" tabindex="-1" id="delete_modal" role="dialog">
+    <div class="modal modal-danger fade" tabindex="-1" id="uninstall_modal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"><i class="voyager-trash"></i> Are you sure you want to uninstall
-                        this hook?</h4>
+                    <h4 class="modal-title">
+                        <i class="voyager-trash"></i>
+                        Are you sure you want to uninstall this hook?
+                    </h4>
                 </div>
                 <div class="modal-footer">
-                    <form action="{{ route('voyager.hooks') }}" id="delete_form" method="POST">
+                    <form action="{{ route('voyager.hooks') }}" id="uninstall_form" method="POST">
                         {{ method_field("DELETE") }}
                         {{ csrf_field() }}
-                        <input type="submit" class="btn btn-danger pull-right delete-confirm"
-                               value="Yes, Delete This Hook">
+                        <input type="submit" class="btn btn-danger pull-right uninstall-confirm"
+                               value="Yes, Uninstall This Hook">
                     </form>
                     <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
                 </div>
@@ -92,25 +105,16 @@
 
     <div class="modal modal-success fade" tabindex="-1" id="install_modal" role="dialog">
         <div class="modal-dialog">
-            <form class="modal-content" action="{{ route('voyager.hooks') }}" id="install_form" method="POST">
+            <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"><i class="voyager-plus"></i>Install new hook.</h4>
+                    <h4 class="modal-title"><i class="voyager-plus"></i> Installing hook</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" class="form-control" id="name" placeholder="Name of hook">
-                    </div>
+                    <p>Please be patience, installation in process...</p>
                 </div>
-                <div class="modal-footer">
-                        {{ csrf_field() }}
-                        <input type="submit" class="btn btn-success pull-right install-confirm"
-                               value="Install">
-                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
-                </div>
-            </form><!-- /.modal-content -->
+            </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 @stop
@@ -122,18 +126,22 @@
             $('#dataTable').DataTable({ "order": [] });
         });
 
-        $('.page-title').on('click', '.install', function (e) {
-            var form = $('#install_form')[0];
-
+        /**
+         * Install Hook
+         */
+        $('td').on('click', '.install', function (e) {
             $('#install_modal').modal('show');
         });
 
-        $('td').on('click', '.delete', function (e) {
-            var form = $('#delete_form')[0];
+        /**
+         * Install Hook
+         */
+        $('td').on('click', '.uninstall', function (e) {
+            var form = $('#uninstall_form')[0];
 
             form.action = parseActionUrl(form.action, $(this).data('id'));
 
-            $('#delete_modal').modal('show');
+            $('#uninstall_modal').modal('show');
         });
 
         function parseActionUrl(action, id) {
