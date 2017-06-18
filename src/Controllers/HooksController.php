@@ -32,9 +32,8 @@ class HooksController extends Controller
         ]);
     }
 
-    public function install(Request $request)
+    public function install($name)
     {
-        $name = $request->get('name');
         $this->hooks->install($name);
 
         return redirect(route('voyager.hooks'))->with([

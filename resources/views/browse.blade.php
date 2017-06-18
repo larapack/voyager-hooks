@@ -56,8 +56,8 @@
                                                 <i class="voyager-edit"></i> {{ $hook->enabled ? 'Disable' : 'Enable' }}
                                             </a>
                                         @else
-                                            <a href="javascript:;" class="btn-sm btn-primary pull-right install"
-                                                data-id="{{ $hook->name }}" id="install-{{ $hook->name }}">
+                                            <a href="{{ route('voyager.hooks.install', $hook->name) }}"
+                                                class="btn-sm btn-primary pull-right install">
                                                 <i class="voyager-plus"></i> Install
                                             </a>
                                         @endif
