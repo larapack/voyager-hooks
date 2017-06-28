@@ -3,7 +3,6 @@
 namespace Larapack\VoyagerHooks\Controllers;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Larapack\Hooks\Hooks;
 
@@ -32,38 +31,63 @@ class HooksController extends Controller
         ]);
     }
 
-    public function install(Request $request)
+    public function install($name)
     {
-        $this->hooks->install($request->get('name'));
+        $this->hooks->install($name);
 
-        return redirect(route('voyager.hooks'));
+        return redirect(route('voyager.hooks'))->with([
+            'message'    => 'Hook '.$name.' was Installed',
+            'alert-type' => 'success',
+        ]);
     }
 
     public function uninstall($name)
     {
         $this->hooks->uninstall($name);
 
-        return redirect(route('voyager.hooks'));
+        return redirect(route('voyager.hooks'))->with([
+            'message'    => 'Hook '.$name.' was Uninstalled',
+            'alert-type' => 'success',
+        ]);
     }
 
     public function update($name)
     {
         $this->hooks->update($name);
 
-        return redirect(route('voyager.hooks'));
+        return redirect(route('voyager.hooks'))->with([
+            'message'    => 'Hook '.$name.' was Updated',
+            'alert-type' => 'success',
+        ]);
     }
 
     public function enable($name)
     {
         $this->hooks->enable($name);
 
-        return redirect(route('voyager.hooks'));
+        return redirect(route('voyager.hooks'))->with([
+            'message'    => 'Hook '.$name.' is Enabled',
+            'alert-type' => 'success',
+        ]);
     }
 
     public function disable($name)
     {
         $this->hooks->disable($name);
 
-        return redirect(route('voyager.hooks'));
+        return redirect(route('voyager.hooks'))->with([
+            'message'    => 'Hook '.$name.' was Disabled',
+            'alert-type' => 'success',
+        ]);
+    }
+
+    public function cacheRefresh()
+    {
+        $this->hooks->refreshCache();
+
+        return redirect(route('voyager.hooks'))->with([
+            'message'    => 'Hooks Cache Updated',
+            'alert-type' => 'success',
+        ]);
     }
 }
