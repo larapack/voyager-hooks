@@ -3,6 +3,7 @@
 namespace Larapack\VoyagerHooks\Controllers;
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Larapack\Hooks\Hooks;
 
@@ -31,63 +32,38 @@ class HooksController extends Controller
         ]);
     }
 
-    public function install($name)
+    public function install(Request $request)
     {
-        $this->hooks->install($name);
+        $this->hooks->install($request->get('name'));
 
-        return redirect(route('voyager.hooks'))->with([
-            'message'    => 'Hook '.$name.' was Installed',
-            'alert-type' => 'success',
-        ]);
+        return redirect(route('voyager.hooks'));
     }
 
     public function uninstall($name)
     {
         $this->hooks->uninstall($name);
 
-        return redirect(route('voyager.hooks'))->with([
-            'message'    => 'Hook '.$name.' was Uninstalled',
-            'alert-type' => 'success',
-        ]);
+        return redirect(route('voyager.hooks'));
     }
 
     public function update($name)
     {
         $this->hooks->update($name);
 
-        return redirect(route('voyager.hooks'))->with([
-            'message'    => 'Hook '.$name.' was Updated',
-            'alert-type' => 'success',
-        ]);
+        return redirect(route('voyager.hooks'));
     }
 
     public function enable($name)
     {
         $this->hooks->enable($name);
 
-        return redirect(route('voyager.hooks'))->with([
-            'message'    => 'Hook '.$name.' is Enabled',
-            'alert-type' => 'success',
-        ]);
+        return redirect(route('voyager.hooks'));
     }
 
     public function disable($name)
     {
         $this->hooks->disable($name);
 
-        return redirect(route('voyager.hooks'))->with([
-            'message'    => 'Hook '.$name.' was Disabled',
-            'alert-type' => 'success',
-        ]);
-    }
-
-    public function cacheRefresh()
-    {
-        $this->hooks->refreshCache();
-
-        return redirect(route('voyager.hooks'))->with([
-            'message'    => 'Hooks Cache Updated',
-            'alert-type' => 'success',
-        ]);
+        return redirect(route('voyager.hooks'));
     }
 }
