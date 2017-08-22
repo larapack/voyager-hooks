@@ -10,10 +10,12 @@ use Larapack\Hooks\Hooks;
 class HooksController extends Controller
 {
     protected $hooks;
+    protected $request;
 
-    public function __construct(Hooks $hooks)
+    public function __construct(Hooks $hooks, Request $request)
     {
         $this->hooks = $hooks;
+        $this->request = $request;
     }
 
     public function index()
@@ -32,38 +34,47 @@ class HooksController extends Controller
         ]);
     }
 
-    public function install(Request $request)
+    public function install()
     {
-        $this->hooks->install($request->get('name'));
+        $name = $this->request->get('name');
+        $this->hooks->install($name);
 
-        return redirect(route('voyager.hooks'));
+        return $this->redirect("Hook [{$name}] have been installed!");
     }
 
     public function uninstall($name)
     {
         $this->hooks->uninstall($name);
 
-        return redirect(route('voyager.hooks'));
+        return $this->redirect("Hook [{$name}] have been uninstalled!");
     }
 
     public function update($name)
     {
         $this->hooks->update($name);
 
-        return redirect(route('voyager.hooks'));
+        return $this->redirect("Hook [{$name}] have been updated!");
     }
 
     public function enable($name)
     {
         $this->hooks->enable($name);
 
-        return redirect(route('voyager.hooks'));
+        return $this->redirect("Hook [{$name}] have been enabled!");
     }
 
     public function disable($name)
     {
         $this->hooks->disable($name);
 
-        return redirect(route('voyager.hooks'));
+        return $this->redirect("Hook [{$name}] have been disabled!");
+    }
+
+    protected function redirect($message)
+    {
+        $referer = $this->request->server('HTTP_REFERER');
+        $location = head(explode('?', $referer));
+        header('Location: '.$location.'?message='.urlencode($message));
+        exit;
     }
 }

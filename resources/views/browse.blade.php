@@ -15,6 +15,15 @@
 
 @section('content')
     <div class="page-content container-fluid">
+        @if (request()->has('message'))
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-{{ request('message_type', 'info') }}">
+                        <p>{{ request('message') }}</p>
+                    </div>
+                </div>
+            </div>
+        @endif
         @if($daysSinceLastCheck >= 10)
             <div class="row">
                 <div class="col-md-12">
@@ -52,11 +61,13 @@
                                         <a href="{{ route('voyager.hooks.'.($hook->enabled ? 'disable' : 'enable'), $hook->name) }}" class="btn-sm btn-primary pull-right edit">
                                             <i class="voyager-edit"></i> {{ $hook->enabled ? 'Disable' : 'Enable' }}
                                         </a>
+                                        <?php /*
                                         @if ($hook->hasUpdateAvailable())
                                             <a href="{{ route('voyager.hooks.update', $hook->name) }}" class="btn-sm btn-warning pull-right update">
                                                 <i class="voyager-edit"></i> Update
                                             </a>
                                         @endif
+                                        */ ?>
                                     </td>
                                 </tr>
                             @endforeach
