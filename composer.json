@@ -15,7 +15,6 @@
         }
     ],
     "require": {
-        "tcg/voyager": "~1.0.0|dev-master",
         "larapack/hooks": "~1.0.0"
     },
     "require-dev": {
