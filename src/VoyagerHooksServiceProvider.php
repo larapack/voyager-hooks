@@ -34,14 +34,6 @@ class VoyagerHooksServiceProvider extends ServiceProvider
         if (config('voyager-hooks.add-route', true)) {
             $events->listen('voyager.admin.routing', [$this, 'addHookRoute']);
         }
-
-        if (config('voyager-hooks.add-menu', true)) {
-            $events->listen('voyager.menu.display', [$this, 'addHookMenuItem']);
-        }
-
-        if (config('voyager-hooks.add-permission', true)) {
-            $events->listen('voyager.permissions.loaded', [$this, 'addPermission']);
-        }
     }
 
     public function addHookRoute($router)
@@ -54,46 +46,5 @@ class VoyagerHooksServiceProvider extends ServiceProvider
         $router->get('hooks/{name}/update', ['uses' => $namespacePrefix.'HooksController@update', 'as' => 'hooks.update']);
         $router->post('hooks', ['uses' => $namespacePrefix.'HooksController@install', 'as' => 'hooks.install']);
         $router->delete('hooks/{name}', ['uses' => $namespacePrefix.'HooksController@uninstall', 'as' => 'hooks.uninstall']);
-    }
-
-    public function addHookMenuItem(Menu $menu)
-    {
-        if ($menu->name == 'admin') {
-            $url = route('voyager.hooks', [], false);
-
-            $menuItem = $menu->items->where('url', $url)->first();
-
-            if (is_null($menuItem)) {
-                $menu->items->add(MenuItem::create([
-                    'menu_id'    => $menu->id,
-                    'url'        => $url,
-                    'title'      => 'Hooks',
-                    'target'     => '_self',
-                    'icon_class' => 'voyager-hook',
-                    'color'      => null,
-                    'parent_id'  => null,
-                    'order'      => 99,
-                ]));
-
-                $this->ensurePermissionExist();
-            }
-        }
-    }
-
-    protected function ensurePermissionExist()
-    {
-        $permission = Permission::firstOrNew([
-            'key'        => 'browse_hooks',
-            'table_name' => 'admin',
-        ]);
-
-        if (!$permission->exists) {
-            $permission->save();
-
-            $role = Role::where('name', 'admin')->first();
-            if (!is_null($role)) {
-                $role->permissions()->attach($permission);
-            }
-        }
     }
 }
