@@ -13,7 +13,7 @@ class VoyagerHooksServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if(config('voyager-hooks.disable_in_production', false) && config('app.env', 'production') === 'production') {
+        if (config('voyager-hooks.disable_in_production', false) && config('app.env', 'production') === 'production') {
             return true;
         }
 
@@ -21,7 +21,7 @@ class VoyagerHooksServiceProvider extends ServiceProvider
         $this->app->register(HooksServiceProvider::class);
 
         // Load views
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'voyager-hooks');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'voyager-hooks');
     }
 
     /**
@@ -33,7 +33,7 @@ class VoyagerHooksServiceProvider extends ServiceProvider
      */
     public function boot(Dispatcher $events)
     {
-        if(config('voyager-hooks.disable_in_production', false) && config('app.env', 'production') === 'production') {
+        if (config('voyager-hooks.disable_in_production', false) && config('app.env', 'production') === 'production') {
             return true;
         }
 
