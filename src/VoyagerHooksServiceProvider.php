@@ -17,6 +17,16 @@ class VoyagerHooksServiceProvider extends ServiceProvider
             return true;
         }
 
+        if ($this->app->runningInConsole()) {
+            $config = dirname(__DIR__) . '/publishable/config/voyager-hooks.php';
+
+            $this->publishes(
+                [$config => config_path('voyager-hooks.php')],
+                'Voyager-hooks config'
+            );
+        }
+
+
         // Register the HooksServiceProvider
         $this->app->register(HooksServiceProvider::class);
 
