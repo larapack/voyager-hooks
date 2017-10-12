@@ -13,6 +13,10 @@ class VoyagerHooksServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        if(config('voyager-hooks.disable_in_production', false) && config('app.env', 'production') === 'production') {
+            return true;
+        }
+
         // Register the HooksServiceProvider
         $this->app->register(HooksServiceProvider::class);
 
@@ -24,9 +28,15 @@ class VoyagerHooksServiceProvider extends ServiceProvider
      * Bootstrap the application services.
      *
      * @param \Illuminate\Events\Dispatcher $events
+     *
+     * @return bool
      */
     public function boot(Dispatcher $events)
     {
+        if(config('voyager-hooks.disable_in_production', false) && config('app.env', 'production') === 'production') {
+            return true;
+        }
+
         if (config('voyager-hooks.add-route', true)) {
             $events->listen('voyager.admin.routing', [$this, 'addHookRoute']);
         }
