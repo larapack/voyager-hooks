@@ -14,7 +14,7 @@ class VoyagerHooksServiceProvider extends ServiceProvider
     public function register()
     {
         if (config('voyager-hooks.disable_in_production', false) && config('app.env', 'production') === 'production') {
-            return true;
+            return;
         }
 
         if ($this->app->runningInConsole()) {
