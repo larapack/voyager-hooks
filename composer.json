@@ -29,5 +29,12 @@
         "psr-4": {
             "Larapack\\VoyagerHooks\\Tests\\": "tests/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Larapack\\VoyagerHooks\\VoyagerHooksServiceProvider"
+            ]
+        }
     }
 }

@@ -22,7 +22,7 @@ Install using composer:
 composer require larapack/voyager-hooks
 ```
 
-Then add the service provider to the configuration:
+Then add the service provider to the configuration (optional on Laravel 5.5+):
 
 ```php
 'providers' => [
