@@ -3,7 +3,7 @@
 return [
     // Disables the hooks in production to avoid conflicts
     // in the composer.json file
-    'disable_in_production' => true,
+    'disable' => true,
 
     // Adds the appropriate routing to each hook
     // on installation.
