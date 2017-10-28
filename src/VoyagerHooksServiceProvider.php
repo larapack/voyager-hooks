@@ -9,16 +9,17 @@ use Larapack\Hooks\HooksServiceProvider;
 class VoyagerHooksServiceProvider extends ServiceProvider
 {
 
-    // Registers resources and commands
-    if ($this->app->runningInConsole()) {
-        $this->registerCommands();
-    }
-
     /**
      * Register the application services.
      */
     public function register()
     {
+
+        // Registers resources and commands
+        if ($this->app->runningInConsole()) {
+            $this->registerCommands();
+        }
+    
         // Register the HooksServiceProvider
         $this->app->register(HooksServiceProvider::class);
 
