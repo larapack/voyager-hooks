@@ -19,7 +19,7 @@ class VoyagerHooksServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->registerCommands();
         }
-    
+
         // Register the HooksServiceProvider
         $this->app->register(HooksServiceProvider::class);
 
