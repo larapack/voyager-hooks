@@ -8,7 +8,6 @@ use Larapack\Hooks\HooksServiceProvider;
 
 class VoyagerHooksServiceProvider extends ServiceProvider
 {
-
     /**
      * Register the application services.
      */
