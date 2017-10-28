@@ -8,6 +8,12 @@ use Larapack\Hooks\HooksServiceProvider;
 
 class VoyagerHooksServiceProvider extends ServiceProvider
 {
+
+    // Registers resources and commands
+    if ($this->app->runningInConsole()) {
+        $this->registerCommands();
+    }
+
     /**
      * Register the application services.
      */
@@ -42,5 +48,13 @@ class VoyagerHooksServiceProvider extends ServiceProvider
         $router->get('hooks/{name}/update', ['uses' => $namespacePrefix.'HooksController@update', 'as' => 'hooks.update']);
         $router->post('hooks', ['uses' => $namespacePrefix.'HooksController@install', 'as' => 'hooks.install']);
         $router->delete('hooks/{name}', ['uses' => $namespacePrefix.'HooksController@uninstall', 'as' => 'hooks.uninstall']);
+    }
+
+    /**
+     * Register commands.
+     */
+    protected function registerCommands()
+    {
+        $this->commands(Commands\HookPermissionCommand::class);
     }
 }

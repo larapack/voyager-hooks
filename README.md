@@ -30,6 +30,12 @@ Then add the service provider to the configuration (optional on Laravel 5.5+):
 ],
 ```
 
+run the console command to add browse_hooks permission
+
+```php
+php artisan voyager:hook-permission
+```
+
 In order for Voyager to automatically check for updates of hooks, add the following to your console kernel:
 
 ```php
