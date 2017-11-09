@@ -45,7 +45,7 @@ class VoyagerHooksServiceProvider extends ServiceProvider
     public function boot(Dispatcher $events)
     {
         if (config('voyager-hooks.disable', false) {
-            return true;
+            return;
         }
 
         if (config('voyager-hooks.add-route', true)) {
