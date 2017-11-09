@@ -44,7 +44,7 @@ class VoyagerHooksServiceProvider extends ServiceProvider
      */
     public function boot(Dispatcher $events)
     {
-        if (config('voyager-hooks.disable_in_production', false) && config('app.env', 'production') === 'production') {
+        if (config('voyager-hooks.disable', false) {
             return true;
         }
 
