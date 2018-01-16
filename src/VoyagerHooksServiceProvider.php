@@ -2,7 +2,11 @@
 
 namespace Larapack\VoyagerHooks;
 
+use TCG\Voyager\Models\Menu;
+use TCG\Voyager\Models\MenuItem;
+use Larapack\Hooks\Events\Setup;
 use Illuminate\Events\Dispatcher;
+use TCG\Voyager\Models\Permission;
 use Illuminate\Support\ServiceProvider;
 use Larapack\Hooks\HooksServiceProvider;
 
@@ -30,6 +34,14 @@ class VoyagerHooksServiceProvider extends ServiceProvider
         if (config('voyager-hooks.add-route', true)) {
             $events->listen('voyager.admin.routing', [$this, 'addHookRoute']);
         }
+
+        if (config('voyager-hooks.add-hook-menu-item', true)) {
+            $events->listen(Setup::class, [$this, 'addHookMenuItem']);
+        }
+
+        if (config('voyager-hooks.add-hook-permissions', true)) {
+            $events->listen(Setup::class, [$this, 'addHookPermissions']);
+        }
     }
 
     public function addHookRoute($router)
@@ -42,5 +54,49 @@ class VoyagerHooksServiceProvider extends ServiceProvider
         $router->get('hooks/{name}/update', ['uses' => $namespacePrefix.'HooksController@update', 'as' => 'hooks.update']);
         $router->post('hooks', ['uses' => $namespacePrefix.'HooksController@install', 'as' => 'hooks.install']);
         $router->delete('hooks/{name}', ['uses' => $namespacePrefix.'HooksController@uninstall', 'as' => 'hooks.uninstall']);
+    }
+
+    public function addHookMenuItem()
+    {
+        $menu = Menu::where('name', 'admin')->first();
+
+        if (is_null($menu)) {
+            return;
+        }
+
+        $parentId = null;
+
+        $toolsMenuItem = MenuItem::where('menu_id', $menu->id)
+            ->where('title', 'Tools')
+            ->first();
+
+        if ($toolsMenuItem) {
+            $parentId = $toolsMenuItem->id;
+        }
+
+        $menuItem = MenuItem::firstOrNew([
+            'menu_id' => $menu->id,
+            'title'   => 'Hooks',
+            'url'     => '',
+            'route'   => 'voyager.hooks',
+        ]);
+
+        if (!$menuItem->exists) {
+            $menuItem->fill([
+                'target'     => '_self',
+                'icon_class' => 'voyager-hook',
+                'color'      => null,
+                'parent_id'  => $parentId,
+                'order'      => 13,
+            ])->save();
+        }
+    }
+
+    public function addHookPermissions()
+    {
+        Permission::firstOrCreate([
+            'key'        => 'browse_hooks',
+            'table_name' => null,
+        ]);
     }
 }
