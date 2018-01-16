@@ -2,13 +2,13 @@
 
 namespace Larapack\VoyagerHooks;
 
+use Illuminate\Events\Dispatcher;
+use Illuminate\Support\ServiceProvider;
+use Larapack\Hooks\Events\Setup;
+use Larapack\Hooks\HooksServiceProvider;
 use TCG\Voyager\Models\Menu;
 use TCG\Voyager\Models\MenuItem;
-use Larapack\Hooks\Events\Setup;
-use Illuminate\Events\Dispatcher;
 use TCG\Voyager\Models\Permission;
-use Illuminate\Support\ServiceProvider;
-use Larapack\Hooks\HooksServiceProvider;
 
 class VoyagerHooksServiceProvider extends ServiceProvider
 {
