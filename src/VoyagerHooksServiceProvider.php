@@ -17,20 +17,41 @@ class VoyagerHooksServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        if (config('voyager-hooks.disable', false) {
+            return;
+        }
+            
+
+        if ($this->app->runningInConsole()) {
+            $config = dirname(__DIR__) . '/publishable/config/voyager-hooks.php';
+
+            $this->publishes(
+                [$config => config_path('voyager-hooks.php')],
+                'Voyager-hooks config'
+            );
+        }
+
+
         // Register the HooksServiceProvider
         $this->app->register(HooksServiceProvider::class);
 
         // Load views
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'voyager-hooks');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'voyager-hooks');
     }
 
     /**
      * Bootstrap the application services.
      *
      * @param \Illuminate\Events\Dispatcher $events
+     *
+     * @return bool
      */
     public function boot(Dispatcher $events)
     {
+        if (config('voyager-hooks.disable', false) {
+            return;
+        }
+
         if (config('voyager-hooks.add-route', true)) {
             $events->listen('voyager.admin.routing', [$this, 'addHookRoute']);
         }
