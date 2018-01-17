@@ -18,7 +18,7 @@ class VoyagerHooksServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $configPath = dirname(__DIR__) . '/publishable/config/voyager-hooks.php';
+        $configPath = dirname(__DIR__).'/publishable/config/voyager-hooks.php';
 
         $this->mergeConfigFrom($configPath, 'voyager-hooks');
 
@@ -134,7 +134,7 @@ class VoyagerHooksServiceProvider extends ServiceProvider
         if (config('voyager-hooks.enabled', true)) {
             return config('hooks.enabled', true);
         }
-        
+
         return config('voyager-hooks.enabled', true);
     }
 }
