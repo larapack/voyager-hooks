@@ -2,7 +2,7 @@
 
 namespace Larapack\VoyagerHooks;
 
-use Illuminate\Events\Dispatcher;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\ServiceProvider;
 use Larapack\Hooks\Events\Setup;
