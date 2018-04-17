@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Larapack\Hooks\Hooks;
+use TCG\Voyager\Facades\Voyager;
 
 class HooksController extends Controller
 {
@@ -20,6 +21,9 @@ class HooksController extends Controller
 
     public function index()
     {
+        // Check permission
+        Voyager::canOrFail('browse_hooks');
+
         $lastUpdated = $this->hooks->getLastRemoteCheck();
 
         if (is_null($lastUpdated)) {
@@ -36,6 +40,9 @@ class HooksController extends Controller
 
     public function install()
     {
+        // Check permission
+        Voyager::canOrFail('browse_hooks');
+
         $name = $this->request->get('name');
         $this->hooks->install($name);
 
@@ -44,6 +51,9 @@ class HooksController extends Controller
 
     public function uninstall($name)
     {
+        // Check permission
+        Voyager::canOrFail('browse_hooks');
+
         $this->hooks->uninstall($name);
 
         return $this->redirect("Hook [{$name}] have been uninstalled!");
@@ -51,6 +61,9 @@ class HooksController extends Controller
 
     public function update($name)
     {
+        // Check permission
+        Voyager::canOrFail('browse_hooks');
+
         $this->hooks->update($name);
 
         return $this->redirect("Hook [{$name}] have been updated!");
@@ -58,6 +71,9 @@ class HooksController extends Controller
 
     public function enable($name)
     {
+        // Check permission
+        Voyager::canOrFail('browse_hooks');
+
         $this->hooks->enable($name);
 
         return $this->redirect("Hook [{$name}] have been enabled!");
@@ -65,6 +81,9 @@ class HooksController extends Controller
 
     public function disable($name)
     {
+        // Check permission
+        Voyager::canOrFail('browse_hooks');
+
         $this->hooks->disable($name);
 
         return $this->redirect("Hook [{$name}] have been disabled!");
