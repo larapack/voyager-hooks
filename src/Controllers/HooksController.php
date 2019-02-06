@@ -3,6 +3,7 @@
 namespace Larapack\VoyagerHooks\Controllers;
 
 use Carbon\Carbon;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Larapack\Hooks\Hooks;
@@ -10,6 +11,8 @@ use TCG\Voyager\Facades\Voyager;
 
 class HooksController extends Controller
 {
+    use AuthorizesRequests;
+
     protected $hooks;
     protected $request;
 
