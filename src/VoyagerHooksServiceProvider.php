@@ -10,6 +10,7 @@ use Larapack\Hooks\HooksServiceProvider;
 use TCG\Voyager\Models\Menu;
 use TCG\Voyager\Models\MenuItem;
 use TCG\Voyager\Models\Permission;
+use TCG\Voyager\Models\Role;
 
 class VoyagerHooksServiceProvider extends ServiceProvider
 {
@@ -122,6 +123,14 @@ class VoyagerHooksServiceProvider extends ServiceProvider
             'key'        => 'browse_hooks',
             'table_name' => null,
         ]);
+
+        $role = Role::where('name', 'admin')->firstOrFail();
+
+        $permissions = Permission::all();
+
+        $role->permissions()->sync(
+            $permissions->pluck('id')->all()
+        );
     }
 
     public function publishVendorFiles()
