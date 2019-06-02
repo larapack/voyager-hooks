@@ -124,7 +124,11 @@ class VoyagerHooksServiceProvider extends ServiceProvider
                         'table_name' => null,
                     ]);
 
-        $role = Role::where('name', 'admin')->firstOrFail();
+        if (config()->has('voyager.bread.default_role')) {
+            $role = Role::where('name', config('voyager.bread.default_role'))->firstOrFail();
+        } else {
+            $role = Role::where('name', 'admin')->firstOrFail();
+        }
 
         $role->permissions()->attach($permission);
     }
