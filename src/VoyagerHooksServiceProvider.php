@@ -119,18 +119,14 @@ class VoyagerHooksServiceProvider extends ServiceProvider
 
     public function addHookPermissions()
     {
-        Permission::firstOrCreate([
-            'key'        => 'browse_hooks',
-            'table_name' => null,
-        ]);
+        $permission = Permission::firstOrCreate([
+                        'key'        => 'browse_hooks',
+                        'table_name' => null,
+                    ]);
 
         $role = Role::where('name', 'admin')->firstOrFail();
 
-        $permissions = Permission::all();
-
-        $role->permissions()->sync(
-            $permissions->pluck('id')->all()
-        );
+        $role->permissions()->attach($permission);
     }
 
     public function publishVendorFiles()
