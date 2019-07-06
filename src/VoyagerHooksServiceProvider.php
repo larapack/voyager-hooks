@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\ServiceProvider;
 use Larapack\Hooks\Events\Setup;
 use Larapack\Hooks\HooksServiceProvider;
-use TCG\Voyager\Models\Menu;
-use TCG\Voyager\Models\MenuItem;
-use TCG\Voyager\Models\Permission;
+use TCG\Voyager\Facades\Voyager;
 
 class VoyagerHooksServiceProvider extends ServiceProvider
 {
@@ -82,7 +80,7 @@ class VoyagerHooksServiceProvider extends ServiceProvider
 
     public function addHookMenuItem()
     {
-        $menu = Menu::where('name', 'admin')->first();
+        $menu = Voyager::model('Menu')::where('name', 'admin')->first();
 
         if (is_null($menu)) {
             return;
@@ -90,7 +88,7 @@ class VoyagerHooksServiceProvider extends ServiceProvider
 
         $parentId = null;
 
-        $toolsMenuItem = MenuItem::where('menu_id', $menu->id)
+        $toolsMenuItem = Voyager::model('MenuItem')::where('menu_id', $menu->id)
             ->where('title', 'Tools')
             ->first();
 
@@ -98,7 +96,7 @@ class VoyagerHooksServiceProvider extends ServiceProvider
             $parentId = $toolsMenuItem->id;
         }
 
-        $menuItem = MenuItem::firstOrNew([
+        $menuItem = Voyager::model('MenuItem')::firstOrNew([
             'menu_id' => $menu->id,
             'title'   => 'Hooks',
             'url'     => '',
@@ -118,7 +116,7 @@ class VoyagerHooksServiceProvider extends ServiceProvider
 
     public function addHookPermissions()
     {
-        Permission::firstOrCreate([
+        Voyager::model('Permission')::firstOrCreate([
             'key'        => 'browse_hooks',
             'table_name' => null,
         ]);
